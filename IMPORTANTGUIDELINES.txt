@@ -1,0 +1,57 @@
+DEPLOYMENT GUIDLINES:
+
+To deploy,first you need to run the devopsPhase1.sh script on a remote server
+This script will perform pretty much everything you need to deploy
+our app on a remote server, however, please note that after you are done
+you need to exit the server and ssh back in, in order for the environment
+variables to be set, then you need to run devopsPhase1B.sh after you
+ssh back into the server, this will stop and start the backend api so that
+it can work correctly after the env variables have been set
+
+
+You will be prompted to edit two files during the deployment process.
+The first is the environment file, please append the following:
+
+PORT="3000"
+MONGODB_URL="mongodb+srv://admin:admin@projectx-test-d5geh.mongodb.net/projectx?retryWrites=true&w=majority"
+NODE_ENV="production"
+
+
+The second will be the nginx configuration file, please copy this and
+paste it there:
+
+server {
+  listen 80 default_server;
+  server_name _;
+
+  # react app & front-end files
+  location / {
+    root /opt/FrontEnd/spotify/build;
+    try_files $uri /index.html;
+  }
+
+  # node api reverse proxy
+  location /api/ {
+    proxy_pass http://localhost:3000/;
+  }
+}
+
+Note that in the very end, pm2 startup is going to generate a command that you should copy and paste in order to configure pm2 to start at bootm but I already copied it and it should be performed automatically given that the user name is ubuntu
+
+Then the rest should be done on its own, but don't forget to perform what
+I have said in the first few lines of this text file.
+
+
+
+
+If you try to install Jenkins, you'll be prompted to edit te sudoers file,
+add this line to the very end:
+
+jenkins ALL= (ALL) NOPASSWD: ALL
+
+Then save to sudoers,not sudoers.tmp, this is done to allow jenkins
+to execute commands using sudo
+
+
+
+

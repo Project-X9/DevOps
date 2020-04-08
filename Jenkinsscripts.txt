@@ -1,0 +1,39 @@
+#You need to specify the git repo
+#Then add additional behavior, and checkout to a sub-directory,then specify the
+#directory name in which you will clone your repo when a push occurs (relative 
+# to the work path)
+#in build triggers,choose poll scm, then add the time period in which it will 
+#check the repo for any new push
+
+
+#STAGE 1
+
+#BACKEND JOB
+cd /var/lib/jenkins/workspace/BackEnd/Jenkins-BackEnd
+npm install
+
+#FRONTEND JOB
+cd /var/lib/jenkins/workspace/FrontEnd/Jenkins-FrontEnd/spotify
+sudo npm install
+sudo npm run build
+
+#TESTING JOB(NOT YET,NEXT PHASE)
+
+#STAGE 2
+#RUN THE TESTING SCRIPTS (NOT YET,NEXT PHASE)
+
+#STAGE 3 (DEPLOY FRONTEND AND BACKEND)
+cd /opt/BackEnd
+sudo git pull origin master
+sudo npm install
+
+cd /opt/FrontEnd
+sudo git pull origin features
+cd /opt/FrontEnd/spotify
+sudo npm install
+sudo npm run build
+
+
+
+
+
