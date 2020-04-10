@@ -4,7 +4,7 @@ Update the database with information on any new packages
 >sudo apt-get update
 sudo apt-get install -y build-essential openssl libssl-dev pkg-config
 
-### install node
+**Install node**
 
 Install nodejs package
 
@@ -19,19 +19,19 @@ Clean the data in the cache folder
 >sudo npm cache clean -f
 sudo npm install -g n
 
-Upgrade to the latest stable node version
+Upgrade to the latest stable node version**
 
 >sudo n stable
 
-Install nginx
+**Install nginx**
 
 >sudo apt-get install nginx -y
 
-Setup Git
+**Install Git**
 
 >sudo apt-get install git -y
 
-Install and setup mongoDB
+**Install and setup mongoDB**
 
 >sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 4B7C549A058F8B6B
 
@@ -43,7 +43,7 @@ sudo apt-get install -y mongodb-org --allow-unauthenticated
 sudo service mongod start
 sudo systemctl enable mongod && sudo systemctl start mongod
 
-Install PM2
+**Install PM2**
 
 >sudo npm install pm2 -g
 
@@ -51,6 +51,7 @@ Install PM2
 # Complete steps documentation
 ### After installing the previous tools, we need to do the following:
 **Set the environment variables**
+
 Run this command
 > sudo nano /etc/environment
 
@@ -65,6 +66,7 @@ Make sure that you logout of the remote server and ssh back in after you do so, 
 
 
 **Clone the repo**
+
 Simply run the following commands to clone them into the /opt directory (or cd into any directory you want and clone it there)
 
 >cd /opt
@@ -74,6 +76,7 @@ sudo git clone -b features https://github.com/Project-X9/FrontEnd.git
 
 
 **Linking the project wit Nginx**
+
 Run the following commands
 >sudo rm /etc/nginx/sites-available/default
 sudo nano /etc/nginx/sites-available/default
@@ -83,6 +86,7 @@ Then restart nginx using the following command
 >sudo systemctl restart nginx
 
 **Installing dependencies**
+
 Go to the directory in which you cloned the Backend repo, and install the dependencies by running the following commands:
 >cd /opt
 sudo chown -R ubuntu BackEnd
