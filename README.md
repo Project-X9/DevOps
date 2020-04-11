@@ -39,7 +39,7 @@ Upgrade to the latest stable node version**
 
 >sudo apt install udo
 sudo apt-get update
-sudo apt-get install -y mongodb-org --allow-unauthenticated
+sudo apt-get install -y mongodb-org
 sudo service mongod start
 sudo systemctl enable mongod && sudo systemctl start mongod
 
@@ -152,6 +152,12 @@ proxy_pass http://localhost:3000/;
 
 # Credentials to access the server using ssh
 
+To connect the the EC2 instance, you'll need a private key (.pem) file, and you'll need the username and the public DNS of the server.
+For our server, the username is "ubuntu", and the public DNS is  "ec2-3-21-218-250.us-east-2.compute.amazonaws.com".
+So, if you have the necessary .pem file required to ssh into the server, you'll need to go into the directory containing this .pem file, and then you can ssh into the server using the following command:
+>ssh -i "mypem.pem" ubuntu@ec2-3-21-218-250.us-east-2.compute.amazonaws.com
+
+assuming that your pem file name is "mypem.pem"
 
 
 
