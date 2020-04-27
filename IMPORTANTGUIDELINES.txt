@@ -36,6 +36,22 @@ server {
   }
 }
 
+server {
+  listen 4000;
+  server_name _;
+
+  # react app & front-end files
+  location / {
+    root /home/omar/Downloads/FrontEnd/spotify/build;
+    try_files $uri /index.html;
+  }
+
+  # node api reverse proxy
+  location /api/ {
+    proxy_pass http://localhost:3000/;
+  }
+}
+
 Note that in the very end, pm2 startup is going to generate a command that you should copy and paste in order to configure pm2 to start at bootm but I already copied it and it should be performed automatically given that the user name is ubuntu
 
 Then the rest should be done on its own, but don't forget to perform what
