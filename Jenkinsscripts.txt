@@ -5,30 +5,50 @@
 #in build triggers,choose poll scm, then add the time period in which it will 
 #check the repo for any new push
 
+#STAGE 0 (Setting up Jenkins to run the tests)
+cd /home/omar/Downloads/Testing
+sudo apt install python3-pip
+sudo apt install python-pip
+
+sudo apt-get install python3-distutils
+curl https://bootstrap.pypa.io/get-pip.py | python
+sudo apt install python3-pip
+python3 -m pip install -r requirements.txt
+python3 -m pip install pyvirtualdisplay
+
 
 #STAGE 1
 
-#BACKEND JOB
-cd /var/lib/jenkins/workspace/BackEnd/Jenkins-BackEnd
-npm install
+#BACKENDLISTENER
+cd /home/omar/Downloads/BackEnd/src
+export PORT=5000
+sudo git pull origin master
+sudo npm install
 
-#FRONTEND JOB
-cd /var/lib/jenkins/workspace/FrontEnd/Jenkins-FrontEnd/spotify
+#FRONTENDLISTENER
+cd /home/omar/Downloads/FrontEnd
+sudo git pull origin master
+cd /home/omar/Downloads/FrontEnd/spotify
 sudo npm install
 sudo npm run build
 
-#TESTING JOB(NOT YET,NEXT PHASE)
+#TESTINGLISTENER
+cd /home/omar/Downloads/Testing
+sudo git pull origin DevOpsB
+
 
 #STAGE 2
-#RUN THE TESTING SCRIPTS (NOT YET,NEXT PHASE)
+cd /home/omar/Downloads/Testing
+python3 -m pytest --alluredir="./Reports/All_Reports/allurefiles" ./Web_Testing/Tests/test_login.py -m Do
+#THIS ONLY RUNS ONE TEST, to run all, we will run Test.sh
 
 #STAGE 3 (DEPLOY FRONTEND AND BACKEND)
-cd /opt/BackEnd
+cd /opt/BackEnd/
 sudo git pull origin master
 sudo npm install
 
 cd /opt/FrontEnd
-sudo git pull origin features
+sudo git pull origin master
 cd /opt/FrontEnd/spotify
 sudo npm install
 sudo npm run build
