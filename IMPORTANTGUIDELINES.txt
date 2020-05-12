@@ -1,15 +1,11 @@
 DEPLOYMENT GUIDLINES:
 
-To deploy,first you need to run the devopsPhase1.sh script on a remote server
-This script will perform pretty much everything you need to deploy
-our app on a remote server, however, please note that after you are done
-you need to exit the server and ssh back in, in order for the environment
-variables to be set, then you need to run devopsPhase1B.sh after you
-ssh back into the server, this will stop and start the backend api so that
-it can work correctly after the env variables have been set
+To deploy,first you need to run the script1.sh script on a remote server
+then you need to exit the remote server, and then ssh back in. This is done because the environment variables will not be set until you do so. Afterwards, you can run script2.sh to complete the deployment.
 
 
 You will be prompted to edit two files during the deployment process.
+You will be first prompted when running script1.sh script.
 The first is the environment file, please append the following:
 
 PORT="3000"
@@ -17,6 +13,7 @@ MONGODB_URL="mongodb+srv://admin:admin@projectx-test-d5geh.mongodb.net/projectx?
 NODE_ENV="production"
 
 
+The second prompt will be during running the script2.sh script.
 The second will be the nginx configuration file, please copy this and
 paste it there:
 
@@ -42,7 +39,7 @@ server {
 
   # react app & front-end files
   location / {
-    root /home/omar/Downloads/FrontEnd/spotify/build;
+    root /home/ubuntu/Downloads/FrontEnd/spotify/build;
     try_files $uri /index.html;
   }
 
@@ -52,10 +49,8 @@ server {
   }
 }
 
-Note that in the very end, pm2 startup is going to generate a command that you should copy and paste in order to configure pm2 to start at bootm but I already copied it and it should be performed automatically given that the user name is ubuntu
 
-Then the rest should be done on its own, but don't forget to perform what
-I have said in the first few lines of this text file.
+Note that in the very end, pm2 startup is going to generate a command that you should copy and paste in order to configure pm2 to start at boot, but I already copied it and it should be performed automatically given that the user name is ubuntu
 
 
 
@@ -67,6 +62,15 @@ jenkins ALL= (ALL) NOPASSWD: ALL
 
 Then save to sudoers,not sudoers.tmp, this is done to allow jenkins
 to execute commands using sudo
+
+
+
+The script files script3.sh and script4.sh are mainly used to setup the server to run the tests, and to deploy upon success using Jenkins.
+
+Obviously, you need to run script3.sh and then script4.sh
+
+IMPORTANT NOTICE:
+Please note that Jenkins has been configured to run locally, after taking the TA's permission, because the remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the FrontEnd Files, so the automation of deployment has been performed locally after being granted this permission. So you will notice that the username used in the script files script3.s and script4.sh is "omar", but if we want to run these scripts on a remote server, most probably the username would be "ubuntu" instead of "omar"
 
 
 
