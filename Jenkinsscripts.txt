@@ -1,20 +1,10 @@
 #You need to specify the git repo
-#Then add additional behavior, and checkout to a sub-directory,then specify the
-#directory name in which you will clone your repo when a push occurs (relative 
-# to the work path)
-#in build triggers,choose poll scm, then add the time period in which it will 
-#check the repo for any new push
+#in build triggers,choose Github hook, and add a webhook to the repo
+#the webhook will be used to trigger jobs of stage 1 only
 
-#STAGE 0 (Setting up Jenkins to run the tests)
+#STAGE 0 (Setting up Jenkins to run the tests,this only runs one time)
 cd /home/omar/Downloads/Testing
-sudo apt install python3-pip
-sudo apt install python-pip
-
-sudo apt-get install python3-distutils
-curl https://bootstrap.pypa.io/get-pip.py | python
-sudo apt install python3-pip
 python3 -m pip install -r requirements.txt
-python3 -m pip install pyvirtualdisplay
 
 
 #STAGE 1
@@ -22,12 +12,12 @@ python3 -m pip install pyvirtualdisplay
 #BACKENDLISTENER
 cd /home/omar/Downloads/BackEnd/src
 export PORT=5000
-sudo git pull origin master
+sudo git pull origin devops
 sudo npm install
 
 #FRONTENDLISTENER
 cd /home/omar/Downloads/FrontEnd
-sudo git pull origin master
+sudo git pull origin Deployed
 cd /home/omar/Downloads/FrontEnd/spotify
 sudo npm install
 sudo npm run build
@@ -39,16 +29,36 @@ sudo git pull origin DevOpsB
 
 #STAGE 2
 cd /home/omar/Downloads/Testing
-python3 -m pytest --alluredir="./Reports/All_Reports/allurefiles" ./Web_Testing/Tests/test_login.py -m Do
-#THIS ONLY RUNS ONE TEST, to run all, we will run Test.sh
+
+python3 -m pytest ./Web_Testing/Tests/test_accountoverview.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_artist.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_changePassword.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_likedsongs.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_loggedOutHome.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_login.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_playlist.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_premium.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_signup.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_webplayerHome.py -m Do
+
+python3 -m pytest ./Web_Testing/Tests/test_yourLibrary.py -m Do
 
 #STAGE 3 (DEPLOY FRONTEND AND BACKEND)
 cd /opt/BackEnd/
-sudo git pull origin master
+sudo git pull origin devops
 sudo npm install
 
 cd /opt/FrontEnd
-sudo git pull origin master
+sudo git pull origin Deployed
 cd /opt/FrontEnd/spotify
 sudo npm install
 sudo npm run build

@@ -1,13 +1,106 @@
-#EXIT THE SERVER USING COMMAND "exit" THEN SSH BACK INTO THE SERVER
-#THIS HAS TO BE DONE BECAUSE THE ENVIRONMENT VARIABLES WON'T BE SET UNLESS
-#YOU LOGOUT THEN LOG BACK IN
-#THEN YOU GET BACK IN AND STOP THE index.js PROCESS, AND START IT AGAIN
-#I REALIZE THAT IT'S BETTER IF I DO THIS WHOLE LOGOUT AND LOG BACK IN AFTER I
-#SET MY ENV VARIABLES IMMEDIATELY WHICH WOULD SPARE THE STEPS OF HAVING TO STOP #AND START THE BACKEND API, BUT I ONLY DID IT THIS WAY IN THIS SCRIPT
-#TO MAKE THE FIRST SCRIPT DO MOST OF THE WORK, TO BE SAFE IN CASE YOU 
-#DIDN'T NOTICE THAT THIS SMALL SCRIPT EXISTED
+#install node
+
+#install nodejs package
+sudo apt-get install -y nodejs
+
+#install npm package
+sudo apt-get install npm -y
+
+#cleans the data in the cache folder
+sudo npm cache clean -f
+
+sudo npm install -g n
+
+#upgrade to the latest stable node version
+sudo n stable
+
+
+#install nginx
+
+sudo apt-get install nginx -y
+
+
+#setup Git
+
+sudo apt-get install git -y
+
+#install and setup mongoDB
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 4B7C549A058F8B6B
+
+echo deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+#sudo nano (REMOVE THE QUOTATIONS)
+
+sudo apt install udo
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org
+
+sudo systemctl enable mongod && sudo systemctl start mongod
+
+
+#install PM2
+
+sudo npm install pm2 -g
+
+
+#Cloning the repo
+
+
+cd /opt
+
+sudo git clone -b devops https://github.com/Project-X9/BackEnd.git
+
+cd /opt
+
+sudo git clone -b Deployed https://github.com/Project-X9/FrontEnd.git
+
+
+#Linking the project wit Nginx
+
+sudo rm /etc/nginx/sites-available/default
+
+sudo nano /etc/nginx/sites-available/default
+
+#Then we edit the nginx config file
+
+
+sudo systemctl restart nginx
+
+
+
+
+#install Node npm dependencies
+
+cd /opt
+
+#change owner of the directory(npm install sometimes needed this to be done 1st)
+sudo chown -R omar BackEnd
+
+cd BackEnd
+
+#install back-end dependencies
+sudo npm install
+
+
+
+
+#install all front-end dependencies
+cd /opt/FrontEnd/spotify
+sudo npm install
+sudo npm run build
+
+
 cd /opt/BackEnd/src
-pm2 stop 0
-pm2 delete 0
+#run the backend server using PM2
 pm2 start index.js --watch
+#to make pm2 start automatically when the server is rebooted
+pm2 startup
+
+sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u omar --hp /home/omar
+
+#save the list of processes you want to start when the server starts
 pm2 save
+
