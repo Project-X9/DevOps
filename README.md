@@ -199,7 +199,7 @@ Go to the directory in which you cloned the backend repo for the second time, an
 >npm install
 
 Then go to the directory in which you cloned the frontend repo for the second time, and install the dependencies using the following commands
->cd /home/omar/Downloads/FrontEnd/spotify
+>cd /home/ubunu/Downloads/FrontEnd/spotify
 
 >sudo npm install
 
@@ -209,7 +209,7 @@ Then go to the directory in which you cloned the frontend repo for the second ti
 
 We will start the second backend api on port 5000 this time using the following commands
 
->cd /home/omar/Downloads/BackEnd/src
+>cd /home/ubuntu/Downloads/BackEnd/src
 
 We will set the PORT environment variable to be equal to 5000 temporarily (for this terminal session only), and then we will start the backend api. This way, it will run on port 5000.
 
