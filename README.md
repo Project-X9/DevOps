@@ -9,6 +9,7 @@ Update the database with information on any new packages
 
 
 **Install node**
+
 Install nodejs package
 
 >sudo apt-get install -y nodejs
@@ -54,15 +55,19 @@ Upgrade to the latest stable node version**
 >sudo npm install pm2 -g
 
 **Install pip for python-3**
+
 >sudo apt install python3-pip
 
 **Install python3-distutils package**
+
 >sudo apt-get install python3-distutils
 
 **Install xvfb**
+
 >sudo apt-get install xvfb
 
 **Install Jenkins**
+
 First, we need to install java JDK using the following commands
 >sudo apt update
 
@@ -98,6 +103,7 @@ And now the password will be written on your terminal
 # Complete steps documentation
 ### After installing the previous tools, we need to do the following:
 **Set the environment variables**
+
 Run this command
 > sudo nano /etc/environment
 
@@ -114,6 +120,7 @@ Make sure that you logout of the remote server and ssh back in after you do so, 
 
 
 **Clone the repo**
+
 Simply run the following commands to clone them into the /opt directory (or cd into any directory you want and clone it there)
 
 >cd /opt
@@ -123,6 +130,7 @@ sudo git clone -b features https://github.com/Project-X9/FrontEnd.git
 
 
 **Linking the project wit Nginx**
+
 Run the following commands
 >sudo rm /etc/nginx/sites-available/default
 sudo nano /etc/nginx/sites-available/default
@@ -132,6 +140,7 @@ Then restart nginx using the following command
 >sudo systemctl restart nginx
 
 **Installing dependencies**
+
 Go to the directory in which you cloned the Backend repo, and install the dependencies by running the following commands:
 >cd /opt
 sudo chown -R ubuntu BackEnd
@@ -167,6 +176,7 @@ Then save the list of processes you want to start when the server starts
 The second backend api will run on port 5000, while the frontend files will be served using nginx, and they will be served on port 4000.
 
 **Clone the repo**
+
 Simply run the following commands to clone the backend and frontend repos 
 
 >cd /home/ubuntu/Downloads
@@ -196,6 +206,7 @@ Then go to the directory in which you cloned the frontend repo for the second ti
 >sudo npm run build
 
 **Starting the second backend api**
+
 We will start the second backend api on port 5000 this time using the following commands
 
 >cd /home/omar/Downloads/BackEnd/src
@@ -212,6 +223,7 @@ Then save the list of processes you want to start when the server starts
 
 
 **Clone the Testing repo**
+
 Now we want to clone the Testing repo, in order to be able to run these tests using Jenkins later on.
 
 First, we will clone the repo using the following commands
@@ -220,6 +232,7 @@ First, we will clone the repo using the following commands
 >git clone -b DevOpsB https://github.com/Project-X9/Testing.git
 
 **Installing the Testing dependencies**
+
 To install the testing dependencies, simply run the following command
 >cd /home/ubuntu/Downloads/Testing
 
