@@ -1,3 +1,4 @@
+
 # Prerequisites installations
 
 **Please note that your ubuntu username is assumed to be "ubuntu"**
@@ -238,11 +239,11 @@ To install the testing dependencies, simply run the following command
 
 >python3 -m pip install -r requirements.txt
 
-You then need to run one of the tests, in order to generate the geckodriver log file, as it has some permission restrictions the first time it is generated, which will cause Jenkins to not be able to run the tests, so we will generate it by running a simple test case, and then modify its permissions as follows
+We then need to generate a geckodriver log file, and allow others to write to it (as Jenkins needs this permission) as follows
 
->python3 -m pytest ./Web_Testing/Tests/test_changePassword.py -m Do
+>touch geckodriver.log
 
->chmod 777 geckodriver.log
+>chmod 646 geckodriver.log
 
 
 
