@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #install node
 
 #install nodejs package
@@ -51,11 +53,11 @@ sudo npm install pm2 -g
 
 cd /opt
 
-sudo git clone -b devops https://github.com/Project-X9/BackEnd.git
+sudo git clone https://github.com/Project-X9/BackEnd.git
 
 cd /opt
 
-sudo git clone -b Deployed https://github.com/Project-X9/FrontEnd.git
+sudo git clone -b features https://github.com/Project-X9/FrontEnd.git
 
 
 #Linking the project wit Nginx
@@ -77,7 +79,7 @@ sudo systemctl restart nginx
 cd /opt
 
 #change owner of the directory(npm install sometimes needed this to be done 1st)
-sudo chown -R omar BackEnd
+sudo chown -R ubuntu BackEnd
 
 cd BackEnd
 
@@ -99,8 +101,7 @@ pm2 start index.js --watch
 #to make pm2 start automatically when the server is rebooted
 pm2 startup
 
-sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u omar --hp /home/omar
+sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
 
 #save the list of processes you want to start when the server starts
 pm2 save
-
