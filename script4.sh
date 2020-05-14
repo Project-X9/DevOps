@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/omar/Downloads
+cd /home/ubuntu/Downloads
 
 git clone -b DevOpsB https://github.com/Project-X9/Testing.git
 
@@ -14,7 +14,7 @@ sudo apt-get install xvfb
 #READY TO RUN TESTS
 
 
-cd /home/omar/Downloads/Testing
+cd /home/ubuntu/Downloads/Testing
 
 touch geckodriver.log
 chmod 646 geckodriver.log
