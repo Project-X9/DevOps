@@ -125,16 +125,20 @@ Make sure that you logout of the remote server and ssh back in after you do so, 
 Simply run the following commands to clone them into the /opt directory (or cd into any directory you want and clone it there)
 
 >cd /opt
-sudo git clone https://github.com/Project-X9/BackEnd.git
-cd /opt
-sudo git clone -b features https://github.com/Project-X9/FrontEnd.git
+
+>sudo git clone https://github.com/Project-X9/BackEnd.git
+
+>cd /opt
+
+>sudo git clone -b features https://github.com/Project-X9/FrontEnd.git
 
 
 **Linking the project wit Nginx**
 
 Run the following commands
 >sudo rm /etc/nginx/sites-available/default
-sudo nano /etc/nginx/sites-available/default
+
+>sudo nano /etc/nginx/sites-available/default
 
 Then we edit the nginx config file as shown in the IMPORTANTGUIDLINES.txt file
 Then restart nginx using the following command
@@ -143,16 +147,23 @@ Then restart nginx using the following command
 **Installing dependencies**
 
 Go to the directory in which you cloned the Backend repo, and install the dependencies by running the following commands:
+
 >cd /opt
-sudo chown -R ubuntu BackEnd
-cd BackEnd
-sudo npm install
+
+>sudo chown -R ubuntu BackEnd
+
+>cd BackEnd
+
+>sudo npm install
 
 Then go to the directory of the cloned Frontend repo, and install their dependencies using the following commands:
+
 >cd /opt/FrontEnd/spotify
-sudo npm install
+
+>sudo npm install
 
 Then create a build directory with a production build of the app using the following command:
+
 >sudo npm run build
 
 **Starting the backend api**
@@ -160,7 +171,8 @@ Then create a build directory with a production build of the app using the follo
 First, run the backend server using pm2
 
 >cd /opt/BackEnd/src
-pm2 start index.js --watch
+
+>pm2 start index.js --watch
 
 To make pm2 start automatically when the server is rebooted, run the following two  commands:
 
@@ -191,6 +203,7 @@ Simply run the following commands to clone the backend and frontend repos
 **Installing dependencies**
 
 Go to the directory in which you cloned the backend repo for the second time, and install the dependencies using the following commands
+
 >cd /home/ubuntu/Downloads
 
 >sudo chown -R ubuntu BackEnd
@@ -200,6 +213,7 @@ Go to the directory in which you cloned the backend repo for the second time, an
 >npm install
 
 Then go to the directory in which you cloned the frontend repo for the second time, and install the dependencies using the following commands
+
 >cd /home/ubunu/Downloads/FrontEnd/spotify
 
 >sudo npm install
