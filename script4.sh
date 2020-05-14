@@ -13,7 +13,8 @@ python3 -m pip install -r requirements.txt
 sudo apt-get install xvfb
 #READY TO RUN TESTS
 
-python3 -m pytest ./Web_Testing/Tests/test_changePassword.py -m Do
 
 cd /home/omar/Downloads/Testing
-chmod 777 geckodriver.log
+
+touch geckodriver.log
+chmod 646 geckodriver.log

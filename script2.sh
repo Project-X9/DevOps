@@ -53,11 +53,11 @@ sudo npm install pm2 -g
 
 cd /opt
 
-sudo git clone https://github.com/Project-X9/BackEnd.git
+sudo git clone -b devops https://github.com/Project-X9/BackEnd.git
 
 cd /opt
 
-sudo git clone -b features https://github.com/Project-X9/FrontEnd.git
+sudo git clone -b Deployed https://github.com/Project-X9/FrontEnd.git
 
 
 #Linking the project wit Nginx

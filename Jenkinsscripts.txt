@@ -3,32 +3,32 @@
 #the webhook will be used to trigger jobs of stage 1 only
 
 #STAGE 0 (Setting up Jenkins to run the tests,this only runs one time)
-cd /home/omar/Downloads/Testing
+cd /home/ubuntu/Downloads/Testing
 python3 -m pip install -r requirements.txt
 
 
 #STAGE 1
 
 #BACKENDLISTENER
-cd /home/omar/Downloads/BackEnd/src
+cd /home/ubuntu/Downloads/BackEnd/src
 export PORT=5000
 sudo git pull origin devops
 sudo npm install
 
 #FRONTENDLISTENER
-cd /home/omar/Downloads/FrontEnd
+cd /home/ubuntu/Downloads/FrontEnd
 sudo git pull origin Deployed
-cd /home/omar/Downloads/FrontEnd/spotify
+cd /home/ubuntu/Downloads/FrontEnd/spotify
 sudo npm install
 sudo npm run build
 
 #TESTINGLISTENER
-cd /home/omar/Downloads/Testing
+cd /home/ubuntu/Downloads/Testing
 sudo git pull origin DevOpsB
 
 
 #STAGE 2
-cd /home/omar/Downloads/Testing
+cd /home/ubuntu/Downloads/Testing
 
 python3 -m pytest ./Web_Testing/Tests/test_accountoverview.py -m Do
 
