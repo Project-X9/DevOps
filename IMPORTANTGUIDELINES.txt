@@ -13,7 +13,7 @@ MONGODB_URL="mongodb+srv://admin:admin@projectx-test-d5geh.mongodb.net/projectx?
 NODE_ENV="production"
 
 
-The second prompt will be during running the script2.sh script.
+The second prompt will be during running the script1.sh script.
 The second will be the nginx configuration file, please copy this and
 paste it there:
 
@@ -21,13 +21,11 @@ server {
   listen 80 default_server;
   server_name _;
 
-  # react app & front-end files
   location / {
     root /opt/FrontEnd/spotify/build;
     try_files $uri /index.html;
   }
 
-  # node api reverse proxy
   location /api/ {
     proxy_pass http://localhost:3000/;
   }
@@ -37,13 +35,13 @@ server {
   listen 4000;
   server_name _;
 
-  # react app & front-end files
+
   location / {
     root /home/ubuntu/Downloads/FrontEnd/spotify/build;
     try_files $uri /index.html;
   }
 
-  # node api reverse proxy
+
   location /api/ {
     proxy_pass http://localhost:5000/;
   }
@@ -55,7 +53,7 @@ Note that in the very end, pm2 startup is going to generate a command that you s
 
 
 
-If you try to install Jenkins, you'll be prompted to edit te sudoers file,
+When you try to install Jenkins, you'll be prompted to edit te sudoers file,
 add this line to the very end:
 
 jenkins ALL= (ALL) NOPASSWD: ALL
@@ -70,7 +68,7 @@ The script files script3.sh and script4.sh are mainly used to setup the server t
 Obviously, you need to run script3.sh and then script4.sh
 
 IMPORTANT NOTICE:
-Please note that Jenkins has been configured to run locally, after taking the TA's permission, because the remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the FrontEnd Files, so the automation of deployment has been performed locally after being granted this permission. So you will notice that the username used in the script files script3.s and script4.sh is "omar", but if we want to run these scripts on a remote server, most probably the username would be "ubuntu" instead of "omar"
+Please note that Jenkins has been configured to run locally, after taking the TA's permission, because the remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the FrontEnd Files, so the automation of deployment has been performed locally after being granted this permission.
 
 
 
