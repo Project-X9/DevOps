@@ -261,7 +261,133 @@ We then need to generate a geckodriver log file, and allow others to write to it
 
 
 
+## Jenkins Scripts
+**Setting the webhooks**
 
+To add a webhook to a Github repository, we need to go to the repository’s settings, then select Webhooks, then click on Add a webhook.
+
+The payload url should be the Jenkins URL, followed by “/github-webhook/”.
+
+The content type should be application/json, and I chose “just the push event” to trigger the webhook.
+
+
+**Jenkins pipeline stage 0**
+
+Now that our webhooks have been set, we need to create Jenkins jobs using the Jenkins interface, so first, we will create a job which will execute the following script:
+
+>cd /home/ubuntu/Downloads/Testing
+
+>python3 -m pip install -r requirements.txt
+
+This Job will be executed only once, just to install the Testing dependencies so that Jenkins can run the tests.
+
+**Jenkins pipeline stage 1**
+
+This stage will contain three parallel jobs, each of which is executed whenever a push is made to the BackEnd, FrontEnd, or Testing repositories.
+
+The first job is called the **BackEndListener**, which will be triggered whenever a push is made to the BackEnd repository (by a webhook in the BackEnd repository), then it will execute the following script:
+
+>Cd /home/ubuntu/Downloads/BackEnd
+
+>export PORT=5000
+
+>sudo git pull origin devops
+
+>sudo npm install
+
+This will clone the updated BackEnd repository into another directory other than the one containing the BackEnd api running on port 3000. This version will be running on port 5000.
+
+
+The second job is called the **FrontEndListener**, which will similarly be triggered by means of a webhook in the FrontEnd repository at every push, then it will execute the following script:
+
+>cd /home/ubuntu/Downloads/FrontEnd
+
+>sudo git pull origin Deployed
+
+>cd /home/ubuntu/Downloads/FrontEnd/spotify
+
+>sudo npm install
+
+>sudo npm run build
+
+This will clone the updated FrontEnd repository into another directory other than the one containing the FrontEnd files served at port 80. This version is served at port 4000, and the api requests made from port 4000 are redirected to port 5000, so it communicates with the BackEnd api at port 5000.
+
+The third job is called the **TestingListener**, which will similarly be triggered by means of a webhook in the Testing repository at every push, then it will execute the following script:
+
+>cd /home/ubuntu/Downloads/Testing
+
+>sudo git pull origin DevOpsB
+
+This will simply pull the updated Testing repository and update the Tests to be run.
+
+**Jenkins pipeline stage 2**
+
+The second stage will be triggered if any of the previous three jobs were triggered and executed successfully.
+
+It will execute the following script:
+
+>cd /home/ubuntu/Downloads/Testing
+
+>python3 -m pytest ./Web_Testing/Tests/test_webplayerHome.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_login.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_accountoverview.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_artist.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_changePassword.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_likedsongs.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_loggedOutHome.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_playlist.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_premium.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_signup.py -m Do
+
+>python3 -m pytest ./Web_Testing/Tests/test_yourLibrary.py -m Do
+
+This will go into the directory containing the tests, and will run them. These tests will be run on the files served at port 4000(as set by the Testing team in the version on the DevOpsB Branch), which communicate with the backend API at port 5000, hence, it will run on the new version of the app, and if the tests are passed, this version should be deployed.
+
+If any of the tests contains a failed test case, the Testing team makes the code exit with System code (-1), which marks the Jenkins build as a failure, and hence the next stage (Deployment) will not be executed. Also, if any of the tests failed, then the remaining tests will not be executed, and this makes sense, because one failed test means that the new version will not be deployed, so there’s no point in running the remaining tests.
+
+
+**Jenkins pipeline stage 3**
+
+This stage will be triggered if stage 2 (Running the tests) was completed successfully with no failed test cases. It will execute the following script:
+
+
+>cd /opt/BackEnd/
+
+>sudo git pull origin devops
+
+>sudo npm install
+
+>cd /opt/FrontEnd
+
+>sudo git pull origin Deployed
+
+>cd /opt/FrontEnd/spotify
+
+>sudo npm install
+
+>sudo npm run build
+
+This script will go into the directory containing the BackEnd api running at port 3000, and pull the latest version, and will go into the directory containing the FrontEnd files served at port 80, and communicating with the BackEnd API at port 3000, and will pull and build the latest FrontEnd files
+
+
+**Jenkins E-mail notifications**
+
+To setup Jenkins to be able to send E-mail notifications, we need to first go to Manage Jenkins, then to Configure System, then find the E-mail notification part. Now, we need to first set the SMTP server. In case we were going to use Gmail, we will set the SMTP server to be “smtp.gmail.com”.
+
+Then, in the advanced section, choose use SMTP authentication, and the username and the password should be both your Gmail email and password.
+
+Check the use SSL check box, and the SMTP port should be 465 in case of Gmail.
+
+Now, in our Jenkins Jobs configuration, we can configure Jenkins to send an email notification by going to the Post-build Actions and choosing E-mail Notification, then we can specify the recipient email which will receive the notification in case of a failed build.
 
 
 
@@ -283,6 +409,12 @@ location / {
 root /opt/FrontEnd/spotify/build;
 
 try_files $uri /index.html;
+
+}
+
+location /images/ {
+
+root /home/ubuntu;
 
 }
 
@@ -330,7 +462,26 @@ assuming that your pem file name is "mypem.pem"
 
 
 
+# Used Tools
 
+
+>AWS EC2 services
+
+>AWS SES
+
+>Nginx web server
+
+>PM2
+
+>Git
+
+>Jenkins
+
+There were also some tools that needed to be installed so that the web application would work:
+
+>Node JS
+
+>MongoDB
 
 
 
