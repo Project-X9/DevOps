@@ -10,7 +10,7 @@ python3 -m pip install -r requirements.txt
 #STAGE 1
 
 #BACKENDLISTENER
-cd /home/ubuntu/Downloads/BackEnd/src
+cd /home/ubuntu/Downloads/BackEnd
 export PORT=5000
 sudo git pull origin devops
 sudo npm install
