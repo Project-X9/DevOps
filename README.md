@@ -451,6 +451,23 @@ proxy_pass http://localhost:5000/;
 
 }
 
+
+**Explanation**
+
+
+The first server block listens to port 80, and it was set as the default server, meaning that, any request that doesn’t match any of the server_names, will be dealt with by this block.
+
+The server name was also set to “_”, this means that it will catch any server name. In our case, we don’t have multiple web apps being served on different domains or anything, so this works fine.
+
+The first location block in the first server block will catch requests starting with “/”, and will serve these requests from the root directory, so for example, the request “/signup” will be served with the signup html page in the root directory. If an invalid request is send, such as “/nonexistent/”, this will be served by default with the index.html page in the root directory.
+
+The second location block will catch requests starting with “/images/”, and will serve these requests from the root directory, which is “/home/Ubuntu/images/” (Note that Nginx appends the “/images/” part to the root directory). This was made to serve images stored on the server using Nginx.
+
+The third location block will catch requests starting with “/api/”, and will redirect these requests to port 3000, on which the backend API is running.
+
+The second server block listens on port 4000, and it has two location blocks, very similar to the first and the third location blocks in the first server block. However, a key difference is that the first location block here will serve the frontend files stored in a different directory, and its API requests are routed to port 5000 this time (on which another backend API is running). This is done because whenever a new push is made to the frontend repository, it will be pulled (by Jenkins) in the specified root directory of the first location block, and also if a new push is made to the backend repository, it will be pulled and it will run on port 5000, which is the port that receives the API requests from port 4000. So, we have a second version of our application, on which the tests will be run (using Jenkins), and in case these tests passed, this new version will be Deployed using Jenkins as well.
+
+
 # Credentials to access the server using ssh
 
 To connect the the EC2 instance, you'll need a private key (.pem) file, and you'll need the username and the public DNS of the server.
