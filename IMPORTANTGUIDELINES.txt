@@ -25,6 +25,10 @@ server {
     root /opt/FrontEnd/spotify/build;
     try_files $uri /index.html;
   }
+  
+  location /images/ {
+    root /home/ubuntu;
+  }
 
   location /api/ {
     proxy_pass http://localhost:3000/;
