@@ -221,6 +221,7 @@ Run this command
 > sudo nano /etc/environment
 
 Then append the following lines:
+
 PORT="3000" 
 
 MONGODB_URL="mongodb+srv://admin:admin@projectx-test-d5geh.mongodb.net/projectx?retryWrites=true&w=majority"
@@ -252,7 +253,7 @@ Run the following commands
 
 >sudo nano /etc/nginx/sites-available/default
 
-Then we edit the nginx config file as shown in the IMPORTANTGUIDLINES.txt file
+Then we edit the nginx config file as shown in the "Files needed for deployment" section
 Then restart nginx using the following command
 >sudo systemctl restart nginx
 
