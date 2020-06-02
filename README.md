@@ -1,4 +1,5 @@
 
+
 # Prerequisites installations
 
 **Please note that your ubuntu username is assumed to be "ubuntu"**
@@ -99,7 +100,118 @@ To get the password, run the following command
 And now the password will be written on your terminal
 
 
+**Setting up the mail server**
 
+First, we need to install PHP as follows:
+
+Install the commands that will let us add a software repository
+
+>sudo apt install software-properties-common
+
+Now add the repository and install PHP 7.4
+
+>sudo add-apt-repository ppa:ondrej/php
+
+>sudo apt update
+
+>sudo apt install -y php7.4
+
+>sudo apt-cache search php7*
+
+To check that we have the right version now
+
+>php -v
+
+
+Next, we need to change the default Apache HTTP port, because we already have Nginx listening on port 80, so Apache cannot listen on the same port, so we’ll change it to port 8090 as follows:
+
+
+Edit **ports.conf** file and change the line “Listen 80” to “Listen 8090”
+
+>sudo nano /etc/apache2/ports.conf
+
+We also have to change the line _“<VirtualHost *:80_>” to  _“<VirtualHost *:8090>”_ in the **000-default.conf** file too as follows:
+
+>sudo nano /etc/apache2/sites-enabled/000-default.conf
+
+
+Then, restart Apache service to make the changes take effect
+
+>sudo systemctl restart apache2
+
+
+Now, we need to install the Composer Dependency Manager as shown in the following steps:
+
+Download the installer to the current directory
+
+>php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+Verify the installer SHA-384
+
+>php -r "if (hash_file('sha384', 'composer-setup.php') ==='e0012edf3e80b6978849f5eff0d4b4e4c79ff1609dd1e613307e16318854d24ae64f26d17af3ef0bf7cfb710ca74755a') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+
+Run the installer
+
+>sudo php composer-setup.php
+
+
+Remove the installer
+
+>php -r "unlink('composer-setup.php');"
+
+Install the PHPMailer class
+
+>/home/ubuntu/composer.phar require phpmailer/phpmailer
+
+>/home/ubuntu/composer.phar fund
+
+
+There are also some prerequisites required to work with the Amazon SES:
+
+A- Verify your email address with Amazon SES:
+
+>You must verify each identity that you use as a "From," "Source," "Sender," or "Return-Path" address.
+
+>Amazon SES has endpoints in multiple AWS Regions, and the verification status of the email address is separate for each region. If you want to send email from the same identity in more than one region, you must verify that identity in each region.
+
+>Here are the full steps of how to verify your email address :  
+[https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html)
+
+B- Verifying Domains in Amazon SES:
+
+>Amazon SES requires that you verify your email address or domain, to confirm that you own it and to prevent others from using it.
+
+>When you verify an entire domain, you are verifying all email addresses from that domain, so you don't need to verify email addresses from that domain individually.
+
+>Here are the full steps to verify a domain :  
+[https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domain-procedure.html](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domain-procedure.html)
+
+
+C- Get your SMTP credentials:
+
+>You need an Amazon SES SMTP user name and password to access the Amazon SES SMTP interface.
+
+>Here are the full steps for getting SMTP credentials:  
+[https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html)
+
+
+Now, to send sending an email using the Amazon SES SMTP interface with PHP, do the following:
+
+Create a file named  **amazon-ses-smtp-sample.php**
+
+>touch amazon-ses-smtp-sample.php
+
+Open the file with a text editor
+
+>nano amazon-ses-smtp-sample.php
+
+Then, copy the contents of the attached **amazon-ses-smtp-sample.php** file (You can find it in the Repository and in the submitted compressed file), and paste it in there
+
+Then, to send an email, navigate to the directory in which the **amazon-ses-smtp-sample.php** file was saved, and run the following command:
+
+>php amazon-ses-smtp-sample.php
+
+Review the output. If the email was successfully send, the terminal will display “Email sent!”, Otherwise, it displays an error message.
 
 # Complete steps documentation
 ### After installing the previous tools, we need to do the following:
@@ -484,7 +596,7 @@ assuming that your pem file name is "mypem.pem"
 
 >AWS EC2 services
 
->AWS SES
+>AWS SES SMTP Interface
 
 >Nginx web server
 
@@ -493,6 +605,8 @@ assuming that your pem file name is "mypem.pem"
 >Git
 
 >Jenkins
+
+>PHP and PHPMailer
 
 There were also some tools that needed to be installed so that the web application would work:
 
@@ -504,3 +618,7 @@ There were also some tools that needed to be installed so that the web applicati
 
 
 
+# Necessary Citations
+>The Nginx configuration file was firstly inspired from this tutorial, hence you might notice some similarities.
+
+[https://www.youtube.com/watch?v=FanoTGjkxhQ&t=589s](https://www.youtube.com/watch?v=FanoTGjkxhQ&t=589s)
