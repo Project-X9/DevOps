@@ -672,6 +672,7 @@ There were also some tools that needed to be installed so that the web applicati
 # Our EC2 instance public IP
 
 IPv4 Public IP: 3.21.218.250
+
 Public DNS (IPv4): ec2-3-21-218-250.us-east-2.compute.amazonaws.com
 
 
