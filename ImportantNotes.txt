@@ -1,10 +1,11 @@
+Please view this text file on the Github repository (github.com/Project-X9/DevOps), as it will be split into lines there
 
-- Please note that the CI task has been done locally, and not on the EC2 instance, after taking the TA's permission, because the
-remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the Front-End Files, so the
-CI task has been performed locally after being granted this permission.
+- Please note that the CI task has been done locally, and not on the EC2 instance, after taking the TA's permission, because the 
+remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the Front-End Files, so the 
+CI task has been performed locally after being granted this permission. 
 
-- Also, please note that, since the CI task has been done locally, I used Ngrok to be able to access my localhost through the internet,
-in order to be able to set the webhooks in the BackEnd, FrontEnd, and Testing repositories. However, the public address given by Ngrok is
-no longer valid once you close the terminal on which the Ngrok command has been issued, so I removed the webhooks, and only left one in the
-BackEnd repository just to prove I used webhooks, but you will ofcourse notice that it will say that the "Last delivery was not
-successful", as this webhook is no longer valid.
+- Also, please note that, since the CI task has been done locally, I used Ngrok to be able to access my localhost through the internet, 
+in order to be able to set the webhooks in the BackEnd, FrontEnd, and Testing repositories. However, the public address given by Ngrok is 
+no longer valid once you close the terminal on which the Ngrok command has been issued, so I removed the webhooks, and only left one in the 
+BackEnd repository just to prove I used webhooks, but you will ofcourse notice that it will say that the "Last delivery was not 
+successful", as this webhook is no longer valid. 
