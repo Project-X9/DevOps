@@ -1,3 +1,41 @@
+# General Guidlines 
+To deploy our app, you first need to SSH into an EC2 instance
+Make sure you have the following ports open
+
+>HTTP
+
+>HTTPS
+
+>SMTP
+
+>3000
+
+>8080
+
+>8090
+
+>4000
+
+>5000
+
+Then, you should run script1, which will set the environment variables, install any needed deployment prerequisites, and will edit the nginx configuration file, which you can copy and paste from the "Files needed for Deployment" section.
+
+Afterwards, exit and SSH back into the EC2 instance, so that the environment variables will be set.
+
+Then, run script2, which will clone the frontend and backend repos, install their dependencies, build the frontend files, and start the backend API on port 3000.
+
+You should also run the mailserver script, to setup the server to send emails.
+Please refer to the "Setting up the mailserver" section, inside the "Prerequisite installations" section, and make sure you perform the prerequisites required to work with Amazon SES first.
+
+At this point, you have successfully deployed the web application.
+
+If you want to setup the Jenkins automation process, proceed to run Jenkinsinstall, script3, and script4, which will install Jenkins, clone another version of the web app to run the tests on, and clone the Tests that will be run.
+
+You should then go to port 8080 to access Jenkins, and install the suggested plugins.
+
+Create 6 Jobs as shown in the JenkinsScripts.txt file, and make sure to set the webhooks on the stage 1 jobs, and to make Stage 2 triggered by stage 1, and to make stage 3 triggered by stage 2.
+
+At this point, you should be all set.
 
 
 # Prerequisites installations
