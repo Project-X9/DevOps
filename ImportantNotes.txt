@@ -1,2 +1,4 @@
 
-- Please note that the Jenkins CI task has been done locally, and not on the EC2 instance, after taking the TA's permission, because the remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the FrontEnd Files, so the automation of deployment has been performed locally after being granted this permission.
+- Please note that the CI task has been done locally, and not on the EC2 instance, after taking the TA's permission, because the
+remote server had issues with it's CPU Utilization and RAM, and would freeze when Jenkins would try to build the Front-End Files, so the
+CI task has been performed locally after being granted this permission.
