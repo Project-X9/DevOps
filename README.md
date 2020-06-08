@@ -18,7 +18,7 @@ Make sure you have the following ports open
 
 >5000
 
-Then, you should run script1, which will set the environment variables, install any needed deployment prerequisites, and will edit the nginx configuration file, which you can copy and paste from the "Files needed for Deployment" section.
+Then, you should run script1, which will set the environment variables (Please refer to the "Set the environment variables" section inside the "Complete steps documentation" section to know what environment variables your should set when prompted, install any needed deployment prerequisites, and will edit the nginx configuration file, which you can copy and paste from the "Files needed for Deployment" section.
 
 Afterwards, exit and SSH back into the EC2 instance, so that the environment variables will be set.
 
