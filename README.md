@@ -18,7 +18,7 @@ Make sure you have the following ports open
 
 >5000
 
-Then, you should run script1, which will set the environment variables (Please refer to the "Set the environment variables" section inside the "Complete steps documentation" section to know what environment variables your should set when prompted, install any needed deployment prerequisites, and will edit the nginx configuration file, which you can copy and paste from the "Files needed for Deployment" section.
+Then, you should run script1, which will set the environment variables (Please refer to the "Set the environment variables" section inside the "Complete steps documentation" section to know what environment variables your should set when prompted), install any needed deployment prerequisites, and will edit the nginx configuration file, which you can copy and paste from the "Files needed for Deployment" section.
 
 Afterwards, exit and SSH back into the EC2 instance, so that the environment variables will be set.
 
@@ -34,6 +34,8 @@ If you want to setup the Jenkins automation process, proceed to run Jenkinsinsta
 You should then go to port 8080 to access Jenkins, and install the suggested plugins.
 
 Create 6 Jobs as shown in the JenkinsScripts.txt file, and make sure to set the webhooks on the stage 1 jobs, and to make Stage 2 triggered by stage 1, and to make stage 3 triggered by stage 2.
+
+Also make sure to run stage 0 one time only at the beginning to install the dependencies needed for Testing.
 
 At this point, you should be all set.
 
