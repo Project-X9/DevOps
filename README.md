@@ -621,6 +621,19 @@ The third location block will catch requests starting with “/api/”, and will
 The second server block listens on port 4000, and it has two location blocks, very similar to the first and the third location blocks in the first server block. However, a key difference is that the first location block here will serve the frontend files stored in a different directory, and its API requests are routed to port 5000 this time (on which another backend API is running). This is done because whenever a new push is made to the frontend repository, it will be pulled (by Jenkins) in the specified root directory of the first location block, and also if a new push is made to the backend repository, it will be pulled and it will run on port 5000, which is the port that receives the API requests from port 4000. So, we have a second version of our application, on which the tests will be run (using Jenkins), and in case these tests passed, this new version will be Deployed using Jenkins as well.
 
 
+**Note**
+
+To copy the images directory from your local machine to the directory "/home/ubuntu" in the EC2 instance , you need to run the following command
+
+>scp -i /path/to/.pemfile -r /path/to/imagesDirectory ubuntu@publicDNSOfEc2Instance:/home/ubuntu
+
+so, for example, if your username on the local machine was "user", and the pem file (named pemfile.pem) was stored in the directory /home/user/Downloads, and the images directory was stored in /home/user, then the command would be as follows:
+
+>scp -i /home/user/Downloads/pemfile.pem  -r /home/user/images ubuntu@publicDNSOfEc2Instance:/home/ubuntu
+
+But please make sure to place the public DNS of your EC2 instance instead of "publicDNSOfEc2Instance" in the command, and that the username on the EC2 instance is "ubuntu" (It should be so by default)
+
+
 # Credentials to access the server using ssh
 
 To connect the the EC2 instance, you'll need a private key (.pem) file, and you'll need the username and the public DNS of the server.
